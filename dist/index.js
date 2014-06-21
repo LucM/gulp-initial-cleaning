@@ -1,5 +1,5 @@
 (function() {
-  var cleanTask, deleteFolder, folder, fs, task, toClean, _i, _len;
+  var arg, deleteFolder, fs;
 
   fs = require('fs');
 
@@ -18,26 +18,26 @@
     }
   };
 
-  cleanTask = {
-    'default': ['dist/', 'machin/']
+  arg = process.argv[2];
+
+  if (typeof task === "undefined" || task === null) {
+    arg = 'default';
+  }
+
+  module.exports = function(_arg) {
+    var folder, folders, task, _i, _len, _results;
+    task = _arg.task, folders = _arg.folders;
+    if (arg === task) {
+      if (typeof folders === "string") {
+        folders = [folders];
+      }
+      _results = [];
+      for (_i = 0, _len = folders.length; _i < _len; _i++) {
+        folder = folders[_i];
+        _results.push(deleteFolder(folder));
+      }
+      return _results;
+    }
   };
-
-  task = process.argv[2];
-
-  if (task == null) {
-    task = 'default';
-  }
-
-  toClean = cleanTask['task'];
-
-  if (toClean != null) {
-    if (typeof toClean === "string") {
-      toClean = [toClean];
-    }
-    for (_i = 0, _len = toClean.length; _i < _len; _i++) {
-      folder = toClean[_i];
-      deleteFolder(folder);
-    }
-  }
 
 }).call(this);
