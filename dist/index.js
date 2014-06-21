@@ -1,5 +1,6 @@
 (function() {
-  var arg, deleteFolder, fs;
+  var arg, deleteFolder, fs,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   fs = require('fs');
 
@@ -9,7 +10,7 @@
         var curPath;
         curPath = path + "/" + file;
         if (fs.lstatSync(curPath).isDirectory()) {
-          deleteFolderRecursive(curPath);
+          deleteFolder(curPath);
         } else {
           fs.unlinkSync(curPath);
         }
@@ -20,14 +21,21 @@
 
   arg = process.argv[2];
 
-  if (typeof task === "undefined" || task === null) {
+  if (arg == null) {
     arg = 'default';
   }
 
   module.exports = function(_arg) {
-    var folder, folders, task, _i, _len, _results;
-    task = _arg.task, folders = _arg.folders;
-    if (arg === task) {
+    var folder, folders, tasks, _i, _len, _results;
+    tasks = _arg.tasks, folders = _arg.folders;
+    if (typeof tasks === "string") {
+      tasks = [tasks];
+    }
+    if (typeof folders === "string") {
+      folders = [folders];
+    }
+    console.log(arg, tasks);
+    if (__indexOf.call(tasks, arg) >= 0) {
       if (typeof folders === "string") {
         folders = [folders];
       }

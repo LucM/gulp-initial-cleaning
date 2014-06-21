@@ -6,7 +6,7 @@ deleteFolder = (path) ->
     fs.readdirSync(path).forEach (file, index) ->
       curPath = path + "/" + file
       if fs.lstatSync(curPath).isDirectory() # recurse
-        deleteFolderRecursive curPath
+        deleteFolder curPath
       else # delete file
         fs.unlinkSync curPath
       return
@@ -16,10 +16,13 @@ deleteFolder = (path) ->
 
 # Get current task
 arg = process.argv[2]
-arg = 'default' unless task?
+arg = 'default' unless arg?
 
-module.exports = ({task, folders}) ->
-  if arg is task
-    folders = [folders] if typeof folders is "string"
-    for folder in folders
-      deleteFolder(folder)
+module.exports = ({tasks, folders}) ->
+  tasks = [tasks] if typeof tasks is "string"
+  folders = [folders] if typeof folders is "string"
+
+  if arg in tasks
+      folders = [folders] if typeof folders is "string"
+      for folder in folders
+        deleteFolder(folder)
