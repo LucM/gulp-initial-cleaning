@@ -34,3 +34,10 @@ gulp.task 'html',  -> ...
 gulp.task 'build', ['coffee', 'compass', 'html']
 
 ```
+
+Install
+-----
+
+```
+npm install --save-dev gulp-initial-cleaning
+```
