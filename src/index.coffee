@@ -23,6 +23,5 @@ module.exports = ({tasks, folders}) ->
   folders = [folders] if typeof folders is "string"
 
   if arg in tasks
-      folders = [folders] if typeof folders is "string"
       for folder in folders
         deleteFolder(folder)
